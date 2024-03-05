@@ -1,10 +1,10 @@
 # Comms Library
 
-The `comms` library, short for "communications," serves as an auxiliary module for the [rust-chat-server](../) project. It provides definitions and utilities for handling events and commands.
+The `comms` library, short for "communications," serves as an auxiliary module for the [chat](../) project. It provides definitions and utilities for handling events and commands.
 
 ## Features
 
-- Definitions and documentation for [events](./src/event.rs) and [commands](./src/command.rs) utilized by the [rust-chat-server](../).
+- Definitions and documentation for [events](./src/event.rs) and [commands](./src/command.rs) utilized by the [chat](../).
 - TCP transport support for both **events** and **commands**.
   - [`comms::transport::client`](./src/transport/client.rs) assists in splitting a [tokio::net::TcpStream](https://docs.rs/tokio/latest/tokio/net/struct.TcpStream.html) into an **EventStream** and a **CommandWriter**.
   - [`comms::transport::server`](./src/transport/server.rs) enables the partitioning of a [tokio::net::TcpStream](https://docs.rs/tokio/latest/tokio/net/struct.TcpStream.html) into a **CommandStream** and an **EventWriter**.

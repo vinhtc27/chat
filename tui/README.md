@@ -1,6 +1,6 @@
 # 🎮 Rust Chat Server - TUI Client
 
-The `tui` binary provides a terminal-based UI for the [rust-chat-server](../). This interface communicates with the server using a TCP client via our [comms library](../comms).
+The `tui` binary provides a terminal-based UI for the [chat](../). This interface communicates with the server using a TCP client via our [comms library](../comms).
 
 ![TUI Demo](./docs/tui.gif)
 

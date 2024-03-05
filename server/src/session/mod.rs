@@ -1,4 +1,11 @@
-use std::sync::Arc;
+use lazy_static::lazy_static;
+use std::{
+    sync::{
+        atomic::{AtomicU64, Ordering},
+        Arc, RwLock,
+    },
+    time::Instant,
+};
 
 use comms::{
     command::UserCommand,
@@ -16,6 +23,23 @@ use self::chat_session::ChatSession;
 
 mod chat_session;
 
+lazy_static! {
+    static ref INSTANT: RwLock<Instant> = RwLock::new(Instant::now());
+}
+static COUNTER: AtomicU64 = AtomicU64::new(0);
+
+pub fn benchmark() {
+    COUNTER.fetch_add(1, Ordering::SeqCst);
+    let duration = INSTANT.read().unwrap().elapsed().as_secs();
+    if duration > 3 {
+        let count = COUNTER.load(Ordering::SeqCst);
+        println!("Current RPS: {}", count / duration);
+        let mut new_instant = INSTANT.write().unwrap();
+        *new_instant = Instant::now();
+        COUNTER.store(0, Ordering::SeqCst);
+    }
+}
+
 /// Given a tcp stream and a room manager, handles the user session
 /// until the user quits the session, or the tcp stream is closed for some reason, or the server shuts down
 #[allow(dead_code)]
@@ -23,6 +47,7 @@ pub async fn handle_user_tcp_session(
     room_manager: Arc<RoomManager>,
     mut quit_rx: broadcast::Receiver<()>,
     stream: TcpStream,
+    enable_benchmark: bool,
 ) -> anyhow::Result<()> {
     let session_id = nanoid!();
     // Generate a random id for the user, since we don't have a login system
@@ -65,6 +90,7 @@ pub async fn handle_user_tcp_session(
                 Some(Ok(cmd)) => match cmd {
                     // For user session related commands, we need to handle them in the chat session
                     UserCommand::JoinRoom(_) | UserCommand::SendMessage(_) | UserCommand::LeaveRoom(_) => {
+                        if enable_benchmark {benchmark()};
                         chat_session.handle_user_command(cmd).await?;
                     }
                     _ => {}
@@ -93,6 +119,7 @@ pub async fn handle_user_ws_session(
     room_manager: Arc<RoomManager>,
     mut quit_rx: broadcast::Receiver<()>,
     stream: TcpStream,
+    enable_benchmark: bool,
 ) -> anyhow::Result<()> {
     let session_id = nanoid!();
     // Generate a random id for the user, since we don't have a login system
@@ -135,6 +162,7 @@ pub async fn handle_user_ws_session(
                             break;
                         }
                         UserCommand::JoinRoom(_) | UserCommand::SendMessage(_) | UserCommand::LeaveRoom(_) => {
+                            if enable_benchmark {benchmark()};
                             chat_session.handle_user_command(cmd).await?;
                         }
                     }

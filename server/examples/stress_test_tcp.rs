@@ -5,11 +5,11 @@ use comms::{
     event::Event,
     transport,
 };
+use futures_util::StreamExt;
 use nanoid::nanoid;
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use serde::{Deserialize, Serialize};
 use tokio::{net::TcpStream, task::JoinSet};
-use tokio_stream::StreamExt;
 
 /// Stres Test for the Chat Server
 ///

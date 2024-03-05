@@ -10,9 +10,9 @@ This project serves as a learning exercise in [Rust](https://www.rust-lang.org/)
 
 To get the project up and running, follow these steps:
 
-1. Clone the repository: `git clone git@github.com:Yengas/rust-chat-server.git`
+1. Clone the repository: `git clone git@github.com:vinhtc27/chat.git`
 2. Make sure you have [Rust and Cargo](https://www.rust-lang.org/tools/install) installed.
-3. Change to the project directory: `cd rust-chat-server`
+3. Change to the project directory: `cd chat`
 4. Start the server: `cargo run --bin server`
 5. Launch one or more TUI instances: `cargo run --bin tui`
 

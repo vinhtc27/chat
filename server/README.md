@@ -1,6 +1,6 @@
 # Rust Chat Server - Server Binary
 
-The `server` binary is the backbone of the [rust-chat-server](../). It establishes a TCP server, listening for events and commands through our [comms library](../comms).
+The `server` binary is the backbone of the [chat](../). It establishes a TCP server, listening for events and commands through our [comms library](../comms).
 
 ---
 
@@ -33,7 +33,9 @@ Run the server with `cargo run` or `cargo run --bin server` according to your wo
 - **Example**: Check [stress_test_tcp](./examples/stress_test_tcp.rs) in the examples directory.
 - 🚨 **Socket Limits**: Ensure both server and stress test socket limits are configured for high user volumes.
 
-Run the stress test with `cargo run --example stress_test_tcp`.
+Run the tcp server stress test with `cargo run --example stress_test_tcp`.
+
+Run the websocket server stress test with `cargo run --example stress_test_ws`.
 
 ### 📈 Stress Test Outcomes
 

@@ -80,8 +80,7 @@ async fn spawn_single_user(rooms_to_join: Vec<String>) -> anyhow::Result<()> {
 }
 
 async fn spawn_single_user_raw(rooms_to_join: Vec<String>) -> anyhow::Result<()> {
-    let url = url::Url::parse(format! {"ws://{DEFAULT_WS_SERVER_ADDR}"}.as_str()).unwrap();
-    let (websocket, _) = connect_async(url).await?;
+    let (websocket, _) = connect_async(format! {"ws://{DEFAULT_WS_SERVER_ADDR}"}.as_str()).await?;
     let (mut ws_writer, mut ws_reader) = websocket.split();
 
     let _ = match ws_reader.next().await {
