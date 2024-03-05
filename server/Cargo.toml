@@ -1,0 +1,22 @@
+[package]
+name = "server"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "1.0.75"
+comms = { path = "../comms", features = ["server"] }
+nanoid = "0.4.0"
+serde = "1.0.188"
+serde_json = "1.0.105"
+tokio = { version = "1.32.0", features = ["full"] }
+tokio-stream = { version = "0.1.14" }
+tokio-tungstenite = "0.21.0"
+futures-util = "0.3.30"
+url = "2.3.1"
+
+[dev-dependencies]
+comms = { path = "../comms", features = ["client"] }
+rand = "0.8.5"
