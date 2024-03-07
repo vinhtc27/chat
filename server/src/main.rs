@@ -37,7 +37,7 @@ fn main() {
     }
 
     let runtime = Builder::new_multi_thread()
-        .worker_threads(1)
+        .worker_threads(worker_threads)
         .enable_all()
         .build()
         .unwrap();
